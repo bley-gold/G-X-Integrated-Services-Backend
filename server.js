@@ -9,6 +9,13 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Start server
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 GX Services Backend API running on port ${PORT}`);
+  console.log(`📧 SMTP configured for: ${process.env.SMTP_HOST}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
+  console.log(`📬 Email recipients: ${process.env.EMAIL_TO}`);
+});
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: false,
@@ -73,7 +80,7 @@ const contactSchema = Joi.object({
 
 // Create nodemailer transporter
 const createTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT),
     secure: process.env.SMTP_SECURE === 'true',
@@ -327,13 +334,7 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 GX Services Backend API running on port ${PORT}`);
-  console.log(`📧 SMTP configured for: ${process.env.SMTP_HOST}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
-  console.log(`📬 Email recipients: ${process.env.EMAIL_TO}`);
-});
+
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
