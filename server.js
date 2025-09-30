@@ -7,7 +7,7 @@ const Joi = require('joi');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4035;
 
 // Start server
 app.listen(PORT, "0.0.0.0", () => {
